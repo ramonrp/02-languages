@@ -10,7 +10,9 @@ function values(obj) {
 function values2(obj) {
   const valuesArr = [];
   for (let prop in obj) {
-    valuesArr.push(obj[prop]);
+    if (obj.hasOwnProperty(prop)) {
+      valuesArr.push(obj[prop]);
+    }
   }
 
   return valuesArr;
@@ -19,3 +21,14 @@ function values2(obj) {
 console.log(
   values2({ id: 31, duration: 310, name: "long video", format: "mp4" })
 );
+
+// Ejemplo:
+function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.walk = function () {
+  console.log("I'm walking");
+};
+var john = new Person("John");
+console.log(values2(john)); //
