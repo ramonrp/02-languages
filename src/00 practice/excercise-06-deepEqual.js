@@ -38,27 +38,23 @@ function isDeepEqual(a, b) {
   const bLenght = Object.keys(b).length;
   if (aLenght !== bLenght) return false;
 
-  return deepEquity(a, b);
-}
-
-function deepEquity(objectA, objectB) {
+  //assume objects are equal
   let isEqual = true;
-  for (let prop in objectA) {
-    //check if not primitive and special case null
+  for (let prop in a) {
+    //if function / object and not special case null -> recursion
     if (
-      (typeof objectA[prop] == "function" ||
-        typeof objectA[prop] == "object") &&
-      objectA[prop] !== null
+      (typeof a[prop] == "function" || typeof a[prop] == "object") &&
+      a[prop] !== null
     ) {
-      isEqual = isDeepEqual(objectA[prop], objectB[prop]);
+      isEqual = isDeepEqual(a[prop], b[prop]);
       //if nested non-primitive is not equal, return false
       if (!isEqual) return false;
     } else {
       // in case a primitive property is not equal or isEqual but not own property, return false
       if (
-        objectA[prop] !== objectB[prop] ||
-        !objectA.hasOwnProperty(prop) ||
-        !objectB.hasOwnProperty(prop)
+        a[prop] !== b[prop] ||
+        !a.hasOwnProperty(prop) ||
+        !b.hasOwnProperty(prop)
       ) {
         return false;
       }
